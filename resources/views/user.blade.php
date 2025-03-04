@@ -9,7 +9,7 @@
             <tr>
                 <th>Jumlah Pengguna</th>
                 {{-- <th>Username</th>
-                <th>Nama</th>
+                <th>Nama</thh>
                 <th>ID Level Pengguna</th> --}}
             </tr>
             <tr>
