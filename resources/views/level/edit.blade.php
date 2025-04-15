@@ -18,20 +18,6 @@
           @csrf 
           {!! method_field('PUT') !!}  <!-- tambahkan baris ini untuk proses edit yang butuh method PUT --> 
           <div class="form-group row"> 
-            <label class="col-1 control-label col-form-label">Level</label> 
-            <div class="col-11"> 
-              <select class="form-control" id="level_id" name="level_id" required> 
-                <option value="">- Pilih Level -</option> 
-                @foreach($level as $item) 
-                  <option value="{{ $item->level_id }}" @if($item->level_id == $user->level_id) selected @endif>{{ $item->level_nama }}</option> 
-                @endforeach 
-              </select> 
-              @error('level_id') 
-                <small class="form-text text-danger">{{ $message }}</small> 
-              @enderror 
-            </div> 
-          </div> 
-          <div class="form-group row"> 
             <label class="col-1 control-label col-form-label">Level Kode</label> 
             <div class="col-11"> 
               <input type="text" class="form-control" id="level_kode" name="level_kode" value="{{ old('level_kode', $level->level_kode) }}" required> 

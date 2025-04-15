@@ -16,10 +16,6 @@
             <td>{{ $d->kategori_id }}</td>
             <td>{{ $d->kategori_kode }}</td>
             <td>{{ $d->kategori_nama }}</td>
-            <td>
-                <a href="{{ url('/kategori/ubah', $d->kategori_id) }}">Ubah</a> | 
-                <a href="{{ url('/kategori/hapus', $d->kategori_id) }}">Hapus</a>
-            </td>
         </tr>
         @endforeach
     </table>
