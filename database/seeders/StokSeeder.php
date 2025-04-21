@@ -17,6 +17,7 @@ class StokSeeder extends Seeder
         for ($i = 1; $i <= 15; $i++) {
             $data[] = [
                 'barang_id' => $i,
+                'supplier_id' => rand(1, 5),
                 'user_id' => 1, // Anggap user admin
                 'stok_tanggal' => now(),
                 'stok_jumlah' => rand(10, 100),
