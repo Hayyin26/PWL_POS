@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+// app/Models/BarangModel.php
+
+use App\Models\StokModel;
 
 class BarangModel extends Model
 {
@@ -13,17 +15,25 @@ class BarangModel extends Model
     protected $table = 'm_barang';
     protected $primaryKey = 'barang_id';
 
+    protected $fillable = [
+        'kategori_id',  
+        'barang_kode',
+        'barang_nama',
+        'harga_beli',
+        'harga_jual',
+        // Tidak perlu tambahkan 'barang_stok' di sini karena bukan kolom database
+    ];
 
-    
-    protected $fillable = ['barang_id', 'barang_nama', 'barang_kode', 'kategori_id', 'harga_beli', 'harga_jual'];
+    public $timestamps = false;
 
-    public function barang(): BelongsTo 
+    public function kategori()
     {
-        return $this->belongsTo(BarangModel::class);    
+        return $this->belongsTo(KategoriModel::class, 'kategori_id', 'kategori_id');
     }
 
-    public function kategori(): BelongsTo 
+    // Tambahkan accessor untuk menghitung stok real-time
+    public function getBarangStokAttribute()
     {
-        return $this->belongsTo(KategoriModel::class);    
+        return StokModel::where('barang_id', $this->barang_id)->sum('stok_jumlah');
     }
 }

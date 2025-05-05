@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Laporan Penjualan</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 5px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-right {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <table class="border-bottom-header">
+        <tr>
+            <td width="15%" class="text-center"><img src="{{ asset('polinema-bw.png') }}" width="60%" ></td>
+            <td width="85%">
+                <span class="text-center d-block font-11 font-bold mb-1">KEMENTERIAN
+                    PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</span>
+                <span class="text-center d-block font-13 font-bold mb-1">POLITEKNIK NEGERI
+                    MALANG</span>
+                <span class="text-center d-block font-10">Jl. Soekarno-Hatta No. 9 Malang
+                    65141</span>
+                <span class="text-center d-block font-10">Telepon (0341) 404424 Pes. 101-
+                    105, 0341-404420, Fax. (0341) 404420</span>
+                <span class="text-center d-block font-10">Laman: www.polinema.ac.id</span>
+            </td>
+        </tr>
+    </table>
+    <h3 class="text-center">LAPORAN DATA PENJUALAN</h3>
+    
+    <p>Tanggal Cetak: {{ \Carbon\Carbon::now()->format('d-m-Y H:i') }}</p>
+
+    @php
+    $totalKeseluruhan = 0;
+@endphp
+
+<div class="flex-container">
+    <table class="border-all main-table">
+        <thead>
+            <tr>
+                <th class="text-center">No</th>
+                <th>Kode Penjualan</th>
+                <th>Tanggal Penjualan</th>
+                <th>Pembeli</th>
+                <th class="text-right">Total Pembayaran</th>
+                <th class="text-center">Detail Penjualan</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($penjualan as $p)
+                @php
+                    $totalTransaksi = $p->getTotalAmount();
+                    $totalKeseluruhan += $totalTransaksi;
+                @endphp
+                <tr>
+                    <td class="text-center">{{ $loop->iteration }}</td>
+                    <td>{{ $p->penjualan_kode }}</td>
+                    <td>{{ \Carbon\Carbon::parse($p->penjualan_tanggal)->format('d-m-Y') }}</td>
+                    <td>{{ $p->pembeli }}</td>
+                    <td class="text-right">Rp {{ number_format($totalTransaksi , 0, ',', '.') }}</td>
+                    <td class="text-center">
+                        <table class="border-all detail-table">
+                            <thead>
+                                <tr>
+                                    <th>Kode Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th class="text-right">Harga</th>
+                                    <th class="text-right">Jumlah</th>
+                                    <th class="text-right">Sub Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($p->details as $detail)
+                                <tr>
+                                    <td>{{ $detail->barang->barang_kode }}</td>
+                                    <td>{{ $detail->barang->barang_nama }}</td>
+                                    <td class="text-right">{{ number_format($detail->harga, 0, ',', '.') }}</td>
+                                    <td class="text-right">{{ $detail->jumlah }}</td>
+                                    <td class="text-right">{{ number_format($detail->harga * $detail->jumlah, 0, ',', '.') }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
