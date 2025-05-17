@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 // app/Models/BarangModel.php
 
 use App\Models\StokModel;
@@ -21,7 +22,7 @@ class BarangModel extends Model
         'barang_nama',
         'harga_beli',
         'harga_jual',
-        // Tidak perlu tambahkan 'barang_stok' di sini karena bukan kolom database
+        'image'
     ];
 
     public $timestamps = false;
@@ -35,5 +36,10 @@ class BarangModel extends Model
     public function getBarangStokAttribute()
     {
         return StokModel::where('barang_id', $this->barang_id)->sum('stok_jumlah');
+    }
+
+    public function image()
+    {
+        return Attribute::make(get: fn ($image) => url('/storage/posts' . $image),);
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\KategoriController;
 use App\Http\Controllers\Api\BarangController;
+use App\Http\Controllers\Api\PenjualanDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ use App\Http\Controllers\Api\BarangController;
 */
 
 
-Route::post('/register1', App\Http\Controllers\Api\RegisterController::class)->name('register1');
+Route::post('/register', App\Http\Controllers\Api\RegisterController::class)->name('register');
 Route::post('/login', App\Http\Controllers\Api\LoginController::class)->name('login');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -45,8 +46,16 @@ Route::get('kategori/{kategori}', [KategoriController::class, 'show']);
 Route::put('kategori/{kategori}', [KategoriController::class, 'update']);
 Route::delete('kategori/{kategori}', [KategoriController::class, 'destroy']);
 
+Route::get('register1', RegisterController::class)->name('register1');
+
 Route::get('barang', [BarangController::class, 'index']);
 Route::post('barang', [BarangController::class, 'store']);
 Route::get('barang/{barang}', [BarangController::class, 'show']);
 Route::put('barang/{barang}', [BarangController::class, 'update']);
 Route::delete('barang/{barang}', [BarangController::class, 'destroy']);
+
+Route::get('details', [PenjualanDetailController::class, 'index']);
+Route::post('details', [PenjualanDetailController::class, 'store']);
+Route::get('details/{details}', [PenjualanDetailController::class, 'show']);
+Route::put('details/{details}', [PenjualanDetailController::class, 'update']);
+Route::delete('details/{details}', [PenjualanDetailController::class, 'destroy']);
